@@ -151,4 +151,4 @@ For demonstration purposes only – **not for production use**.
 ---
 
 ## 🙌 Credits
-Developed by **Helin Mazi** and team for the **Intro to Databases (CS-UY 3083)** course at NYU Tandon.
+Developed by **Helin Mazi** and **Gaelle Mechleb** for the **Intro to Databases (CS-UY 3083)** course at NYU Tandon.
