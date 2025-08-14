@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Buy Ticket - Airline Reservation System</title>
+    <style>
+		body {
+			font-family: Arial, sans-serif;
+			margin: 0;
+			padding: 0;
+		}
+		.header {
+			display: flex;
+			justify-content: flex-end;
+			align-items: center;
+			background-color: #f4f4f4;
+			padding: 15px 30px;
+			border-bottom: 1px solid #ddd;
+		}
+		.header a {
+			margin-left: 20px;
+			text-decoration: none;
+			color: #333;
+			font-weight: bold;
+		}
+		.container {
+			width: 80%;
+			margin: 30px auto;
+		}
+		h2 {
+			text-align: center;
+		}
+		.details, .payment-form {
+			border: 1px solid #ccc;
+			padding: 20px;
+			margin-bottom: 30px;
+			border-radius: 8px;
+		}
+		.details p {
+			margin: 10px 0;
+		}
+		label {
+			display: block;
+			margin-top: 10px;
+		}
+		input[type="text"], input[type="number"], input[type="date"], input[type="password"] {
+			width: 100%;
+			padding: 8px;
+			margin-top: 5px;
+			box-sizing: border-box;
+		}
+		select {
+			width: 100%;
+			padding: 8px;
+			margin-top: 5px;
+		}
+		input[type="submit"] {
+			margin-top: 20px;
+			width: 100%;
+			padding: 10px;
+			background-color: #4CAF50;
+			color: white;
+			border: none;
+			cursor: pointer;
+			border-radius: 5px;
+		}
+		input[type="submit"]:hover {
+			background-color: #45a049;
+		}
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <a href="/customer_search_for_flights">Back</a>
+        <a href="/logout">Logout</a>
+    </div>
+
+<div class="container">
+    <h2>Flight & Ticket Details</h2>
+    <div class="details">
+        <p><strong>Flight Number:</strong> {{ flight.flight_number }}</p>
+        <p><strong>Departure:</strong> {{ flight.departure_date_time }}</p>
+        <p><strong>Arrival:</strong> {{ flight.arrival_date_time }}</p>
+        <p><strong>Airline Name:</strong> {{ flight.airline_name }}</p>
+        <p><strong>Airplane Name:</strong> {{ flight.airplane_airline_name }}</p>
+        <p><strong>Plane ID Number:</strong> {{ flight.identification_number }}</p>
+        <p><strong>From:</strong> {{ flight.departure_airport_code }}</p>
+        <p><strong>To:</strong> {{ flight.arrival_airport_code }}</p>
+        <p><strong>Sold Price:</strong> ${{ sold_price }}</p>
+    </div>
+
+    <h2>Enter Payment Details</h2>
+	<form class="payment-form" action="/purchase_ticket" method="POST">
+		<!-- Hidden fields to pass flight & price info -->
+		<input type="hidden" name="flight_number" value="{{ flight.flight_number }}">
+		<input type="hidden" name="departure_date_time" value="{{ flight.departure_date_time }}">
+		<input type="hidden" name="airline_name" value="{{ flight.airline_name }}">
+		<input type="hidden" name="sold_price" value="{{ sold_price }}">
+	
+		<!-- Payment Fields -->
+		<label for="card_type">Card Type:</label>
+		<select name="card_type" required>
+			<option value="Visa">Visa</option>
+			<option value="MasterCard">MasterCard</option>
+			<option value="Amex">American Express</option>
+			<option value="Discover">Discover</option>
+		</select>
+	
+		<label for="card_number">Card Number:</label>
+		<input type="text" name="card_number" required pattern="\d{1,19}" placeholder="Enter card number">
+	
+		<label for="name_on_card">Name on Card:</label>
+		<input type="text" name="name_on_card" required placeholder="As it appears on card">
+	
+		<label for="expiration_date">Expiration Date:</label>
+		<input type="month" name="expiration_date" required>
+	
+		<label for="security_code">Security Code (CVV):</label>
+		<input type="password" name="security_code" required pattern="\d{3,4}" placeholder="3 or 4 digit CVV">
+	
+		<input type="submit" value="Purchase">
+	</form>
+</div>
+
+
+</body>
+</html>

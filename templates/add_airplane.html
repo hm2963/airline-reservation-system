@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Add Airplane - Airline Staff</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			margin: 0;
+			padding: 0;
+		}
+		.header {
+			display: flex;
+			justify-content: flex-end;
+			align-items: center;
+			background-color: #f4f4f4;
+			padding: 15px 30px;
+			border-bottom: 1px solid #ddd;
+		}
+		.header a {
+			margin-left: 20px;
+			text-decoration: none;
+			color: #333;
+			font-weight: bold;
+		}
+		h2 {
+			text-align: center;
+			margin-top: 30px;
+		}
+		form {
+			width: 90%;
+			margin: 20px auto;
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+			gap: 15px;
+		}
+		.field-group {
+			display: flex;
+			flex-direction: column;
+			gap: 10px;
+			grid-column: span 2;
+			border: 1px solid #ddd;
+			padding: 15px;
+			border-radius: 5px;
+			background-color: #f9f9f9;
+		}
+		.field-group h3 {
+			margin: 0;
+			margin-bottom: 5px;
+			font-size: 16px;
+			color: #333;
+		}
+		.field-row {
+			display: flex;
+			gap: 15px;
+		}
+		.field-row input {
+			flex: 1;
+		}
+		input, select {
+			padding: 10px;
+			border: 1px solid #ccc;
+			border-radius: 4px;
+			width: 100%;
+		}
+		input[type="submit"] {
+			grid-column: span 2;
+			background-color: #4CAF50;
+			color: white;
+			border: none;
+			cursor: pointer;
+			font-weight: bold;
+		}
+		input[type="submit"]:hover {
+			background-color: #45a049;
+		}
+		table {
+			width: 95%;
+			margin: 40px auto;
+			border-collapse: collapse;
+		}
+		th, td {
+			border: 1px solid #ccc;
+			padding: 10px;
+			text-align: center;
+		}
+		th {
+			background-color: #eee;
+		}
+	</style>
+</head>
+<body>
+	<div class="header">
+		<a href="/staff_home">Back to Home Page</a>
+		<a href="/logout">Logout</a>
+	</div>
+
+	<h2>Add Airplane</h2>
+
+	<form action="/add_airplane" method="POST">
+		<input type="text" name="identification_number" placeholder="Identification Number" required>
+		<input type="text" name="airplane_airline" placeholder="Airplane Airline Name" required>
+        <input type="number" name="number_of_seats" placeholder="Number of seats" required>
+        <input type="text" name="manufacturing_company" placeholder="Manufacturing Company" required>
+		<input type="submit" value="Add Airplane">
+	</form>
+
+
+	{% if airplanes %}
+    <h2>Airplanes Owned by Your Airline</h2>
+		<table>
+			<tr>
+				<th>Identification Number</th>
+				<th>Airline Name</th>
+				<th>Number of Seats</th>
+				<th>Manufacturing Company</th>
+			</tr>
+			{% for airplane in airplanes %}
+			<tr>
+				<td>{{ airplane.Identification_number }}</td>
+				<td>{{ airplane.Airline_name }}</td>
+				<td>{{ airplane.Number_of_seats }}</td>
+				<td>{{ airplane.Manufacturing_company }}</td>
+			</tr>
+			{% endfor %}
+		</table>
+	{% else %}
+		<p style="text-align:center; margin-top:30px;">No airplanes found for your airline.</p>
+	{% endif %}
+</body>
+</html>

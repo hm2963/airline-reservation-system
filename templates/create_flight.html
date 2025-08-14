@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Create New Flight - Airline Staff</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			margin: 0;
+			padding: 0;
+		}
+		.header {
+			display: flex;
+			justify-content: flex-end;
+			align-items: center;
+			background-color: #f4f4f4;
+			padding: 15px 30px;
+			border-bottom: 1px solid #ddd;
+		}
+		.header a {
+			margin-left: 20px;
+			text-decoration: none;
+			color: #333;
+			font-weight: bold;
+		}
+		h2 {
+			text-align: center;
+			margin-top: 30px;
+		}
+		form {
+			width: 90%;
+			margin: 20px auto;
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+			gap: 15px;
+		}
+		.field-group {
+			display: flex;
+			flex-direction: column;
+			gap: 10px;
+			grid-column: span 2;
+			border: 1px solid #ddd;
+			padding: 15px;
+			border-radius: 5px;
+			background-color: #f9f9f9;
+		}
+		.field-group h3 {
+			margin: 0;
+			margin-bottom: 5px;
+			font-size: 16px;
+			color: #333;
+		}
+		.field-row {
+			display: flex;
+			gap: 15px;
+		}
+		.field-row input {
+			flex: 1;
+		}
+		input, select {
+			padding: 10px;
+			border: 1px solid #ccc;
+			border-radius: 4px;
+			width: 100%;
+		}
+		input[type="submit"] {
+			grid-column: span 2;
+			background-color: #4CAF50;
+			color: white;
+			border: none;
+			cursor: pointer;
+			font-weight: bold;
+		}
+		input[type="submit"]:hover {
+			background-color: #45a049;
+		}
+		table {
+			width: 95%;
+			margin: 40px auto;
+			border-collapse: collapse;
+		}
+		th, td {
+			border: 1px solid #ccc;
+			padding: 10px;
+			text-align: center;
+		}
+		th {
+			background-color: #eee;
+		}
+	</style>
+</head>
+<body>
+	<div class="header">
+		<a href="/staff_home">Back to Home Page</a>
+		<a href="/logout">Logout</a>
+	</div>
+
+	<h2>Create New Flight</h2>
+
+	<form action="create_flight" method="POST">
+		<input type="text" name="flight_number" placeholder="Flight Number" required>
+
+		<div class="field-group">
+			<h3>Departure Info</h3>
+			<div class="field-row">
+				<input type="text" name="departure_airport" placeholder="Departure Airport Code" required>
+				<input type="datetime-local" name="departure_time" placeholder="Departure Date & Time" required>
+			</div>
+		</div>
+
+		<input type="text" name="airline_name" placeholder="Airline Name" value="{{ staff_airline }}" readonly>
+		<input type="text" name="identification_number" placeholder="Airplane ID Number" required>
+		<input type="text" name="airplane_airline" placeholder="Airplane Airline Name" required>
+
+		<div class="field-group">
+			<h3>Arrival Info</h3>
+			<div class="field-row">
+				<input type="text" name="arrival_airport" placeholder="Arrival Airport Code" required>
+				<input type="datetime-local" name="arrival_time" placeholder="Arrival Date & Time" required>
+			</div>
+		</div>
+
+		<input type="number" step="0.01" name="base_price" placeholder="Base Ticket Price ($)" required>
+		<select name="status">
+			<option value="on-time">On-Time</option>
+			<option value="delayed">Delayed</option>
+		</select>
+		<input type="submit" value="Create Flight">
+	</form>
+
+	<h2>Upcoming Flights (Next 30 Days)</h2>
+	<table>
+		<tr>
+			<th>Flight Number</th>
+			<th>Departure</th>
+			<th>Arrival</th>
+			<th>Departure Time</th>
+			<th>Arrival Time</th>
+			<th>Status</th>
+		</tr>
+		{% for flight in future_flights %}
+		<tr>
+			<td>{{ flight.flight_number }}</td>
+			<td>{{ flight.departure_airport }}</td>
+			<td>{{ flight.arrival_airport }}</td>
+			<td>{{ flight.departure_time }}</td>
+			<td>{{ flight.arrival_time }}</td>
+			<td>{{ flight.status }}</td>
+		</tr>
+		{% endfor %}
+	</table>
+
+</body>
+</html>

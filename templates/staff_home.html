@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Staff Home - Airline Reservation System</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			margin: 0;
+			padding: 0;
+		}
+		.header {
+			background-color: #f4f4f4;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			padding: 15px 30px;
+			border-bottom: 1px solid #ddd;
+		}
+		.header a {
+			text-decoration: none;
+			color: #333;
+			font-weight: bold;
+		}
+		.welcome {
+			font-size: 16px;
+			color: #333;
+		}
+		.menu {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: center;
+			margin-top: 50px;
+			gap: 30px;
+			padding: 0 20px;
+		}
+		.menu a {
+			text-decoration: none;
+			background-color: #4CAF50;
+			color: white;
+			padding: 15px 25px;
+			border-radius: 8px;
+			font-size: 18px;
+			box-shadow: 2px 2px 6px rgba(0,0,0,0.1);
+			transition: background-color 0.3s;
+			text-align: center;
+			min-width: 200px;
+		}
+		.menu a:hover {
+			background-color: #45a049;
+		}
+	</style>
+</head>
+<body>
+
+	<div class="header">
+		<!-- Logout link -->
+		<a href="/logout">Logout</a>
+
+		<!-- Welcome message -->
+		<div class="welcome">Welcome, {{ staff_name }}</div>
+	</div>
+
+	<!-- Navigation Menu -->
+	<div class="menu">
+		<a href="/view_flights">View Flights</a>
+		<a href="/create_flight">Create New Flight</a>
+		<a href="/add_airplane">Add Airplane</a>
+		<a href="/add_airport">Add Airport</a>
+		<!-- <a href="/view_flight_ratings">View Flight Ratings</a> -->
+		<a href="/view_reports">View Reports</a>
+	</div>
+
+</body>
+</html>

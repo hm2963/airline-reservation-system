@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Customer Home - Airline Reservation System</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			margin: 0;
+			padding: 0;
+		}
+		.header {
+			background-color: #f4f4f4;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			padding: 15px 30px;
+			border-bottom: 1px solid #ddd;
+		}
+		.header a {
+			text-decoration: none;
+			color: #333;
+			font-weight: bold;
+		}
+		.welcome {
+			font-size: 16px;
+			color: #333;
+		}
+		.menu {
+			display: flex;
+			justify-content: center;
+			margin-top: 50px;
+			gap: 40px;
+		}
+		.menu a {
+			text-decoration: none;
+			background-color: #4CAF50;
+			color: white;
+			padding: 15px 25px;
+			border-radius: 8px;
+			font-size: 18px;
+			box-shadow: 2px 2px 6px rgba(0,0,0,0.1);
+			transition: background-color 0.3s;
+		}
+		.menu a:hover {
+			background-color: #45a049;
+		}
+		.flash-success {
+			color: green;
+			font-weight: bold;
+		}
+		.flash-danger {
+			color: red;
+			font-weight: bold;
+		}
+		.flash-warning {
+			color: orange;
+			font-weight: bold;
+		}
+		.flash-default {
+			color: black;
+			font-weight: bold;
+		}
+	</style>
+</head>
+<body>
+
+	<div class="header">
+		<!-- Logout link -->
+		<a href="/logout">Logout</a>
+
+		<!-- Welcome message -->
+		<div class="welcome">Welcome, {{ customer_name }}</div>
+	</div>
+
+	<!-- Navigation Menu -->
+	<div class="menu">
+		<a href="/view_my_flights">View My Flights</a>
+		<a href="/customer_search_for_flights">Search for Flights</a>
+		<a href="/previous_flights">Previous Flights</a>
+	</div>
+
+	{% with messages = get_flashed_messages(with_categories=true) %}
+		{% if messages %}
+		<ul class="flashes">
+			{% for category, message in messages %}
+			{% if loop.index == 1 %}
+				<li class="flash-{{ category }}">{{ message }}</li>
+			{% endif %}
+			{% endfor %}
+		</ul>
+		{% endif %}
+	{% endwith %}
+	
+</body>
+</html>

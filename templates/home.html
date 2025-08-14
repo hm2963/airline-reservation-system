@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Airline Reservation System</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			margin: 0;
+			padding: 0;
+		}
+		.header {
+			background-color: #f4f4f4;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			padding: 15px 30px;
+			border-bottom: 1px solid #ddd;
+		}
+		.header a {
+			text-decoration: none;
+			color: #333;
+			font-weight: bold;
+		}
+		.container {
+			padding: 40px;
+		}
+		h1, h2 {
+			color: #333;
+		}
+		form {
+			margin-bottom: 40px;
+		}
+		label {
+			display: block;
+			margin-top: 15px;
+			font-weight: bold;
+		}
+		input[type="text"],
+		input[type="date"],
+		select {
+			width: 100%;
+			padding: 8px;
+			margin-top: 5px;
+			border: 1px solid #ccc;
+			border-radius: 4px;
+		}
+		input[type="submit"] {
+			margin-top: 20px;
+			padding: 10px 20px;
+			background-color: #4CAF50;
+			color: white;
+			border: none;
+			border-radius: 4px;
+			cursor: pointer;
+			font-size: 16px;
+		}
+		input[type="submit"]:hover {
+			background-color: #45a049;
+		}
+		table {
+			width: 100%;
+			border-collapse: collapse;
+			margin-top: 20px;
+		}
+		th, td {
+			text-align: left;
+			padding: 12px;
+			border-bottom: 1px solid #ddd;
+		}
+		th {
+			background-color: #f2f2f2;
+		}
+		.flash-success {
+			color: green;
+			font-weight: bold;
+		}
+		.flash-danger {
+			color: red;
+			font-weight: bold;
+		}
+		.flash-warning {
+			color: orange;
+			font-weight: bold;
+		}
+		.flash-default {
+			color: black;
+			font-weight: bold;
+		}
+	</style>
+	<script>
+		function toggleReturnDate() {
+			var tripType = document.getElementById("trip_type").value;
+			var returnDateField = document.getElementById("return_date_field");
+			returnDateField.style.display = (tripType === "round") ? "block" : "none";
+		}
+	</script>
+</head>
+<body>
+
+	<div class="header">
+		<!-- Login/Register or Home links -->
+		<div>
+			<a href="/login">Login</a> |
+			<a href="/register">Register</a>
+		</div>
+		<div class="welcome">Welcome to the Airline Reservation System</div>
+	</div>
+
+	<!-- Flash messages -->
+	{% with messages = get_flashed_messages(with_categories=true) %}
+	{% if messages %}
+		<div style="width: 100%; text-align: center; margin-top: 10px;">
+		{% for category, message in messages %}
+			<div class="
+			{% if category == 'success' %}flash-success
+			{% elif category == 'danger' %}flash-danger
+			{% elif category == 'warning' %}flash-warning
+			{% else %}flash-default
+			{% endif %}">
+			{{ message }}
+			</div>
+		{% endfor %}
+		</div>
+	{% endif %}
+	{% endwith %}
+
+	<div class="container">
+
+		<h1>Search for Flights</h1>
+
+		<form action="/search_for_flights" method="POST">
+			<label for="source">From (Airport Code):</label>
+			<input type="text" name="source" placeholder="e.g. JFK" style="text-transform:uppercase;" required>
+		
+			<label for="destination">To (Airport Code):</label>
+			<input type="text" name="destination" placeholder="e.g. LAX" style="text-transform:uppercase;" required>
+		
+			<label for="departure_date">Departure Date:</label>
+			<input type="date" name="departure_date" required>
+		
+			<label for="trip_type">Trip Type:</label>
+			<select name="trip_type" id="trip_type" onchange="toggleReturnDate()">
+				<option value="oneway">One Way</option>
+				<option value="round">Round Trip</option>
+			</select>
+		
+			<div id="return_date_field" style="display:none;">
+				<label for="return_date">Return Date:</label>
+				<input type="date" name="return_date">
+			</div>
+		
+			<input type="submit" value="Search Flights">
+		</form>
+
+	{% if trip_type == 'round' and departure_flights is defined %}
+		<h2>Departure Flights</h2>
+		{% if departure_flights %}
+			<table>
+				<tr>
+					<th>Flight Number</th>
+					<th>Source</th>
+					<th>Destination</th>
+					<th>Departure</th>
+					<th>Arrival</th>
+					<th>Price</th>
+				</tr>
+				{% for flight in departure_flights %}
+				<tr>
+					<td>{{ flight.flight_number }}</td>
+					<td>{{ flight.source }}</td>
+					<td>{{ flight.destination }}</td>
+					<td>{{ flight.departure_time }}</td>
+					<td>{{ flight.arrival_time }}</td>
+					<td>{{ flight.price }}</td>
+				</tr>
+				{% endfor %}
+			</table>
+		{% else %}
+			<p>No matching departure flights found.</p>
+		{% endif %}
+	
+		<h2>Return Flights</h2>
+		{% if return_flights %}
+			<table>
+				<tr>
+					<th>Flight Number</th>
+					<th>Source</th>
+					<th>Destination</th>
+					<th>Departure</th>
+					<th>Arrival</th>
+					<th>Price</th>
+				</tr>
+				{% for flight in return_flights %}
+				<tr>
+					<td>{{ flight.flight_number }}</td>
+					<td>{{ flight.source }}</td>
+					<td>{{ flight.destination }}</td>
+					<td>{{ flight.departure_time }}</td>
+					<td>{{ flight.arrival_time }}</td>
+					<td>{{ flight.price }}</td>
+				</tr>
+				{% endfor %}
+			</table>
+		{% else %}
+			<p>No matching return flights found.</p>
+		{% endif %}
+	{% elif trip_type == 'oneway' and departure_flights is defined %}
+		<h2>One-way Flights</h2>
+		{% if departure_flights %}
+			<table>
+				<tr>
+					<th>Flight Number</th>
+					<th>Source</th>
+					<th>Destination</th>
+					<th>Departure</th>
+					<th>Arrival</th>
+					<th>Price</th>
+				</tr>
+				{% for flight in departure_flights %}
+				<tr>
+					<td>{{ flight.flight_number }}</td>
+					<td>{{ flight.source }}</td>
+					<td>{{ flight.destination }}</td>
+					<td>{{ flight.departure_time }}</td>
+					<td>{{ flight.arrival_time }}</td>
+					<td>{{ flight.price }}</td>
+				</tr>
+				{% endfor %}
+			</table>
+		{% else %}
+			<p>No matching one-way flights found.</p>
+		{% endif %}
+	{% endif %}
+
+	</div>
+
+</body>
+</html>

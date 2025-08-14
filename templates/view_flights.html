@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Manage Flights - Airline Staff</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			margin: 0;
+			padding: 0;
+		}
+		.header {
+			display: flex;
+			justify-content: flex-end;
+			align-items: center;
+			background-color: #f4f4f4;
+			padding: 15px 30px;
+			border-bottom: 1px solid #ddd;
+		}
+		.header a {
+			margin-left: 20px;
+			text-decoration: none;
+			color: #333;
+			font-weight: bold;
+		}
+		h2 {
+			text-align: center;
+			margin-top: 30px;
+		}
+		form.filter {
+			width: 90%;
+			margin: 0 auto 20px;
+			display: flex;
+			gap: 15px;
+			flex-wrap: wrap;
+			justify-content: center;
+		}
+		form.filter input, form.filter select {
+			padding: 8px;
+			border: 1px solid #ccc;
+			border-radius: 4px;
+		}
+		table {
+			width: 90%;
+			margin: 0 auto;
+			border-collapse: collapse;
+		}
+		th, td {
+			border: 1px solid #ccc;
+			padding: 10px;
+			text-align: center;
+		}
+		th {
+			background-color: #eee;
+		}
+		form.inline {
+			display: inline;
+		}
+		input[type="submit"] {
+			padding: 6px 12px;
+			background-color: #0275d8;
+			color: white;
+			border: none;
+			border-radius: 4px;
+			cursor: pointer;
+		}
+		input[type="submit"]:hover {
+			background-color: #025aa5;
+		}
+	</style>
+</head>
+<body>
+
+	<!-- Top-right corner navigation -->
+	<div class="header">
+		<a href="/staff_home">Back to Home Page</a>
+		<a href="/logout">Logout</a>
+	</div>
+
+	<h2>Flights Managed by Your Airline</h2>
+
+	<!-- Filter Form -->
+	<form class="filter" action="view_flights" method="GET">
+		<label>Date From: <input type="date" name="start_date" value="{{ start_date }}"></label>
+		<label>Date To: <input type="date" name="end_date" value="{{ end_date }}"></label>
+		<label>Departure Airport: 
+			<select name="source">
+				<option value="">Any</option>
+				{% for airport in airports %}
+				<option value="{{ airport }}">{{ airport }}</option>
+				{% endfor %}
+			</select>
+		</label>
+		<label>Arrival Airport:
+			<select name="destination">
+				<option value="">Any</option>
+				{% for airport in airports %}
+				<option value="{{ airport }}">{{ airport }}</option>
+				{% endfor %}
+			</select>
+		</label>
+		<input type="submit" value="Filter">
+	</form>
+
+	<table>
+		<tr>
+			<th>Flight Number</th>
+			<th>Departure Airport</th>
+			<th>Arrival Airport</th>
+			<th>Departure Time</th>
+			<th>Arrival Time</th>
+			<th>Status</th>
+			<th>Customers</th>
+            <th>Update Status</th>
+			<th>Average Rating</th>
+			<th>Comments</th>
+		</tr>
+		{% for flight in flights %}
+		<tr>
+			<td>{{ flight.Flight_number }}</td>
+			<td>{{ flight.Source }}</td>
+			<td>{{ flight.Destination }}</td>
+			<td>{{ flight.Departure_time }}</td>
+			<td>{{ flight.Arrival_time }}</td>
+			<td>{{ flight.Status }}</td>
+			<td>
+				<form class="inline" action="/view_customers" method="GET">
+					<input type="hidden" name="Flight_number" value="{{ flight.Flight_number }}">
+					<input type="submit" value="View">
+				</form>
+			</td>
+            <td>
+				<form class="inline" action="/update_status" method="POST">
+					<input type="hidden" name="Flight_number" value="{{ flight.Flight_number }}">
+					<select name="new_status">
+						<option value="On-time">On-Time</option>
+						<option value="Delayed">Delayed</option>
+					</select>
+					<input type="submit" value="Update">
+				</form>
+			</td>
+			<td>
+				{{ flight.avg_rating }}/5
+			</td>
+			<td>
+				<form class="inline" action="/view_ratings" method="GET">
+					<input type="hidden" name="Flight_number" value="{{ flight.Flight_number }}">
+					<input type="submit" value="See Comments">
+				</form>
+			</td>
+			
+		</tr>
+		{% endfor %}
+	</table>
+
+</body>
+</html>

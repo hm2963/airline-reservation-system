@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>View Reports - Airline Staff</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            background-color: #f4f4f4;
+            padding: 15px 30px;
+            border-bottom: 1px solid #ddd;
+        }
+        .header a {
+            margin-left: 20px;
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+        }
+        h2 {
+            text-align: center;
+            margin: 30px 0 20px;
+        }
+        form {
+            width: 90%;
+            margin: 0 auto 30px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        input[type="date"], input[type="submit"] {
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        canvas {
+            display: block;
+            margin: 0 auto 40px;
+            max-width: 800px;
+        }
+        table {
+            width: 80%;
+            margin: 0 auto 40px;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #eee;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <a href="/staff_home">Back to Home page</a>
+        <a href="/logout">Logout</a>
+    </div>
+
+    <h2>Ticket Sales Report</h2>
+
+    <form action="/view_reports" method="GET">
+        <label>From: 
+            <input type="date" name="start_date" value="{{ start_date }}" required>
+        </label>
+        <label>To: 
+            <input type="date" name="end_date" value="{{ end_date }}" required>
+        </label>
+        <input type="submit" value="Generate Report">
+    </form>
+
+    
+    <canvas id="salesChart"></canvas>
+
+    <table>
+        <tr>
+            <th>Month</th>
+            <th>Tickets Sold</th>
+        </tr>
+        {% for row in monthly_sales %}
+        <tr>
+            <td>{{ row.month }}</td>
+            <td>{{ row.tickets_sold }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <script>
+		const ctx = document.getElementById('salesChart').getContext('2d');
+		const salesChart = new Chart(ctx, {
+			type: 'bar',
+			data: {
+				labels: {{ monthly_sales_labels | tojson | safe }},
+				datasets: [{
+					label: 'Tickets Sold',
+					data: {{ monthly_sales_data | tojson | safe }},
+				}]
+			},
+			options: {
+				responsive: true,
+				scales: {
+					y: {
+						beginAtZero: true,
+						ticks: {
+							stepSize: 1
+						},
+						title: {
+							display: true,
+							text: 'Number of Tickets'
+						}
+					},
+					x: {
+						title: {
+							display: true,
+							text: 'Month'
+						}
+					}
+				}
+			}
+		});
+	</script>
+</body>
+</html>

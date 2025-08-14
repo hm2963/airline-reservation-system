@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Login - Airline Reservation System</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			margin: 0;
+			padding: 0;
+		}
+		.header {
+			display: flex;
+			justify-content: flex-end;
+			align-items: center;
+			background-color: #f4f4f4;
+			padding: 15px 30px;
+			border-bottom: 1px solid #ddd;
+		}
+		.header a {
+			margin-left: 20px;
+			text-decoration: none;
+			color: #333;
+			font-weight: bold;
+		}
+		.container {
+			display: flex;
+			justify-content: space-between;
+			padding: 20px;
+		}
+		.form-section {
+			width: 45%;
+			border: 1px solid #ccc;
+			padding: 20px;
+			border-radius: 8px;
+			box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+		}
+		h2 {
+			text-align: center;
+		}
+		label {
+			display: block;
+			margin-top: 10px;
+		}
+		input[type="text"], input[type="password"] {
+			width: 100%;
+			padding: 8px;
+			margin-top: 5px;
+			box-sizing: border-box;
+		}
+		input[type="submit"] {
+			margin-top: 15px;
+			width: 100%;
+			padding: 10px;
+			background-color: #4CAF50;
+			color: white;
+			border: none;
+			cursor: pointer;
+		}
+		.register-link {
+			display: block;
+			text-align: center;
+			margin-top: 10px;
+		}
+	</style>
+</head>
+<body>
+	
+	<div class="header">
+		<a href="/">Back To Home Page</a>
+	</div>
+	
+	<h1 style="text-align: center;">Login to Airline Reservation System</h1>
+
+	<div class="container">
+
+		<!-- Customer Login Section -->
+		<div class="form-section">
+			<h2>Customer Login</h2>
+			<form action="/customer_login" method="POST">
+				<label for="customer_email">Email:</label>
+				<input type="text" name="customer_email" required>
+
+				<label for="customer_password">Password:</label>
+				<input type="password" name="customer_password" required>
+
+				<input type="submit" value="Login">
+			</form>
+			<a class="register-link" href="/register">Not registered yet? Register here</a>
+		</div>
+
+		<!-- Staff Login Section -->
+		<div class="form-section">
+			<h2>Staff Login</h2>
+			<form action="/staff_login" method="POST">
+				<label for="staff_username">Username:</label>
+				<input type="text" name="staff_username" required>
+
+				<label for="staff_password">Password:</label>
+				<input type="password" name="staff_password" required>
+
+				<input type="submit" value="Login">
+			</form>
+			<a class="register-link" href="/register">Not registered yet? Register here</a>
+		</div>
+
+	</div>
+
+</body>
+</html>

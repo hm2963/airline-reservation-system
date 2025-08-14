@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Previous Flights - Airline Reservation System</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			margin: 0;
+			padding: 0;
+		}
+		.header {
+			display: flex;
+			justify-content: flex-end;
+			align-items: center;
+			background-color: #f4f4f4;
+			padding: 15px 30px;
+			border-bottom: 1px solid #ddd;
+		}
+		.header a {
+			margin-left: 20px;
+			text-decoration: none;
+			color: #333;
+			font-weight: bold;
+		}
+		.container {
+			width: 90%;
+			margin: 30px auto;
+		}
+		h2 {
+			text-align: center;
+		}
+		table {
+			width: 100%;
+			border-collapse: collapse;
+			margin-top: 20px;
+		}
+		th, td {
+			padding: 10px;
+			text-align: center;
+			border: 1px solid #ccc;
+		}
+		form {
+			display: inline;
+		}
+		.rate-btn {
+			padding: 5px 10px;
+			background-color: #2196F3;
+			color: white;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+		}
+		.rate-btn:hover {
+			background-color: #1976D2;
+		}
+	</style>
+</head>
+<body>
+
+	<!-- Header -->
+	<div class="header">
+		<a href="/customer_home">Back</a>
+		<a href="/logout">Logout</a>
+	</div>
+
+	<div class="container">
+		<h2>Your Previous Flights</h2>
+
+		<table>
+			<tr>
+				<th>Flight Number</th>
+				<th>Departure Date & Time</th>
+				<th>Arrival Date & Time</th>
+				<th>Airline Name</th>
+				<th>Airplane Airline</th>
+				<th>Plane ID</th>
+				<th>From</th>
+				<th>To</th>
+				<th>Action</th>
+			</tr>
+
+			{% for flight in previous_flights %}
+			<tr>
+				<td>{{ flight.flight_number }}</td>
+				<td>{{ flight.departure_date_time }}</td>
+				<td>{{ flight.arrival_date_time }}</td>
+				<td>{{ flight.airline_name }}</td>
+				<td>{{ flight.airplane_airline_name }}</td>
+				<td>{{ flight.identification_number }}</td>
+				<td>{{ flight.departure_airport_code }}</td>
+				<td>{{ flight.arrival_airport_code }}</td>
+				<td>
+					<form action="/rate_comment" method="GET">
+						<input type="hidden" name="flight_number" value="{{ flight.flight_number }}">
+						<input type="hidden" name="departure_date_time" value="{{ flight.departure_date_time }}">
+						<button class="rate-btn" type="submit">Rate / Comment</button>
+					</form>
+				</td>
+			</tr>
+			{% endfor %}
+		</table>
+	</div>
+
+</body>
+</html>

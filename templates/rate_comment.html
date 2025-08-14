@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Rate and Comment - Airline Reservation System</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			margin: 0;
+			padding: 0;
+		}
+		.header {
+			display: flex;
+			justify-content: flex-end;
+			align-items: center;
+			background-color: #f4f4f4;
+			padding: 15px 30px;
+			border-bottom: 1px solid #ddd;
+		}
+		.header a {
+			margin-left: 20px;
+			text-decoration: none;
+			color: #333;
+			font-weight: bold;
+		}
+		.container {
+			width: 50%;
+			margin: 40px auto;
+			padding: 20px;
+			border: 1px solid #ccc;
+			border-radius: 10px;
+			box-shadow: 2px 2px 12px rgba(0,0,0,0.1);
+		}
+		h2 {
+			text-align: center;
+			margin-bottom: 30px;
+		}
+		label {
+			display: block;
+			margin-top: 15px;
+		}
+		input[type="number"],
+		textarea {
+			width: 100%;
+			padding: 10px;
+			margin-top: 5px;
+			box-sizing: border-box;
+			border-radius: 5px;
+			border: 1px solid #ccc;
+		}
+		input[type="submit"] {
+			margin-top: 25px;
+			padding: 10px;
+			width: 100%;
+			background-color: #4CAF50;
+			color: white;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+			font-size: 16px;
+		}
+		input[type="submit"]:hover {
+			background-color: #45a049;
+		}
+		.flight-info {
+			margin-bottom: 20px;
+			padding: 10px;
+			background-color: #f9f9f9;
+			border-left: 5px solid #2196F3;
+		}
+	</style>
+</head>
+<body>
+
+	<!-- Header -->
+	<div class="header">
+		<a href="/previous_flights">Back</a>
+		<a href="/logout">Logout</a>
+	</div>
+
+	<div class="container">
+		<h2>Rate and Comment on Your Flight</h2>
+
+		<!-- Flight Details -->
+		<div class="flight-info">
+			<p><strong>Flight Number:</strong> {{ flight.Flight_number }}</p>
+			<p><strong>Departure Date & Time:</strong> {{ flight.Departure_date_time }}</p>
+			<p><strong>Airline:</strong> {{ flight.Airline_name }}</p>			
+		</div>
+
+		<!-- Review Form -->
+		<form action="/submit_review" method="POST">
+			<!-- Hidden Fields to Identify the Flight -->
+			<input type="hidden" name="flight_number" value="{{ flight.Flight_number }}">
+			<input type="hidden" name="departure_date_time" value="{{ flight.Departure_date_time }}">
+			<input type="hidden" name="airline_name" value="{{ flight.Airline_name }}">
+
+			<label for="rating">Rating (1 to 5):</label>
+			<input type="number" name="rating" min="1" max="5" required>
+
+			<label for="comment">Comment (optional):</label>
+			<textarea name="comment" rows="5" placeholder="Write your feedback here..."></textarea>
+
+			<input type="submit" value="Submit Review">
+		</form>
+	</div>
+
+</body>
+</html>

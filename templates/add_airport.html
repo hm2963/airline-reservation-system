@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Add Airport - Airline Staff</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			margin: 0;
+			padding: 0;
+		}
+		.header {
+			display: flex;
+			justify-content: flex-end;
+			align-items: center;
+			background-color: #f4f4f4;
+			padding: 15px 30px;
+			border-bottom: 1px solid #ddd;
+		}
+		.header a {
+			margin-left: 20px;
+			text-decoration: none;
+			color: #333;
+			font-weight: bold;
+		}
+		h2 {
+			text-align: center;
+			margin-top: 30px;
+		}
+		form {
+			width: 80%;
+			margin: 20px auto;
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+			gap: 15px;
+		}
+		input[type="text"], input[type="submit"] {
+			padding: 10px;
+			border: 1px solid #ccc;
+			border-radius: 4px;
+			width: 100%;
+		}
+		input[type="submit"] {
+			background-color: #4CAF50;
+			color: white;
+			font-weight: bold;
+			cursor: pointer;
+			grid-column: span 2;
+		}
+		input[type="submit"]:hover {
+			background-color: #45a049;
+		}
+
+		
+		table {
+			width: 90%;
+			margin: 30px auto;
+			border-collapse: collapse;
+		}
+		th, td {
+			border: 1px solid #ccc;
+			padding: 10px;
+			text-align: center;
+		}
+		th {
+			background-color: #eee;
+		}
+
+	</style>
+</head>
+<body>
+	<div class="header">
+		<a href="/staff_home">Back To Home Page</a>
+		<a href="/logout">Logout</a>
+	</div>
+
+	<h2>Add New Airport</h2>
+
+	<form action="/add_airport" method="POST">
+		<input type="text" name="airport_code" placeholder="Airport Code (e.g., JFK)" required>
+		<input type="text" name="airport_name" placeholder="Airport Name" required>
+		<input type="text" name="city" placeholder="City" required>
+		<input type="text" name="country" placeholder="Country" required>
+		<input type="submit" value="Add Airport">
+	</form>
+
+	{% if airports %}
+    <h2>All Airports</h2>
+    <table>
+        <tr>
+            <th>Airport Code</th>
+            <th>Airport Name</th>
+            <th>City</th>
+            <th>Country</th>
+        </tr>
+        {% for airport in airports %}
+        <tr>
+            <td>{{ airport.Code }}</td>
+            <td>{{ airport.Name }}</td>
+            <td>{{ airport.City }}</td>
+            <td>{{ airport.Country }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+{% else %}
+    <p style="text-align:center; margin-top:30px;">No airports found.</p>
+{% endif %}
+
+</body>
+</html>

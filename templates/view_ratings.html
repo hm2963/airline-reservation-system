@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Flight Ratings - Airline Staff</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			margin: 0;
+			padding: 0;
+		}
+		.header {
+			display: flex;
+			justify-content: flex-end;
+			align-items: center;
+			background-color: #f4f4f4;
+			padding: 15px 30px;
+			border-bottom: 1px solid #ddd;
+		}
+		.header a {
+			margin-left: 20px;
+			text-decoration: none;
+			color: #333;
+			font-weight: bold;
+		}
+		h2, h3 {
+			text-align: center;
+			margin-top: 30px;
+		}
+		table {
+			width: 90%;
+			margin: 20px auto;
+			border-collapse: collapse;
+		}
+		th, td {
+			border: 1px solid #ccc;
+			padding: 10px;
+			text-align: center;
+			vertical-align: top;
+		}
+		th {
+			background-color: #eee;
+		}
+		.comment {
+			text-align: left;
+		}
+	</style>
+</head>
+<body>
+	<div class="header">
+		<a href="/view_flights">Back to Flights</a>
+		<a href="/logout">Logout</a>
+	</div>
+
+	<h2>Flight Ratings</h2>
+
+	<h3>Flight {{ flight.Flight_number }} - Average Rating: 
+		{% if avg_rating %}
+			{{ avg_rating|round(2) }}/5
+		{% else %}
+			No ratings yet
+		{% endif %}
+		- Airline name: {{ flight.Airline_name }}
+	</h3>
+	<h3>Departure date and time: {{ flight.Departure_date_time }}</h3>
+
+	{% if reviews %}
+	<table>
+		<tr>
+			<th>Customer Email</th>
+			<th>Rating</th>
+			<th>Comment</th>
+		</tr>
+		{% for review in reviews %}
+		<tr>
+			<td>{{ review.email }}</td>
+			<td>{{ review.rating }}/5</td>
+			<td class="comment">{{ review.comment }}</td>
+		</tr>
+		{% endfor %}
+	</table>
+	{% else %}
+		<p style="text-align:center; margin-top:30px;">No reviews for this flight yet.</p>
+	{% endif %}
+</body>
+</html>

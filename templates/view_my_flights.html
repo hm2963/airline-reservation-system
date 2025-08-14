@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>My Future Flights</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			margin: 0;
+			padding: 0;
+		}
+		.header {
+			display: flex;
+			justify-content: flex-end;
+			align-items: center;
+			background-color: #f4f4f4;
+			padding: 15px 30px;
+			border-bottom: 1px solid #ddd;
+		}
+		.header a {
+			margin-left: 20px;
+			text-decoration: none;
+			color: #333;
+			font-weight: bold;
+		}
+		h2 {
+			text-align: center;
+			margin-top: 30px;
+		}
+		table {
+			width: 90%;
+			margin: 20px auto;
+			border-collapse: collapse;
+		}
+		th, td {
+			border: 1px solid #ccc;
+			padding: 10px;
+			text-align: center;
+		}
+		th {
+			background-color: #eee;
+		}
+		form {
+			margin: 0;
+		}
+		input[type="submit"] {
+			padding: 6px 12px;
+			background-color: #d9534f;
+			color: white;
+			border: none;
+			border-radius: 4px;
+			cursor: pointer;
+		}
+		input[type="submit"]:hover {
+			background-color: #c9302c;
+		}
+	</style>
+</head>
+<body>
+
+	<!-- Top-right corner navigation -->
+	<div class="header">
+		<a href="/customer_home">Back</a>
+		<a href="/logout">Logout</a>
+	</div>
+
+	<h2>My Upcoming Flights</h2>
+
+	<table>
+		<tr>
+			<th>Flight Number</th>
+			<th>Source</th>
+			<th>Destination</th>
+			<th>Departure Time</th>
+			<th>Arrival Time</th>
+			<th>Status</th>
+			<th>Action</th>
+		</tr>
+		{% for flight in future_flights %}
+		<tr>
+			<td>{{ flight.flight_number }}</td>
+			<td>{{ flight.source }}</td>
+			<td>{{ flight.destination }}</td>
+			<td>{{ flight.departure_time }}</td>
+			<td>{{ flight.arrival_time }}</td>
+			<td>{{ flight.status }}</td>
+			<td>
+				{% if flight.cancel_allowed %}
+				<form action="/cancel_flight" method="POST">
+					<input type="hidden" name="flight_number" value="{{ flight.flight_number }}">
+					<input type="submit" value="Cancel">
+				</form>
+				{% else %}
+				---
+				{% endif %}
+			</td>
+		</tr>
+		{% endfor %}
+	</table>
+
+</body>
+</html>

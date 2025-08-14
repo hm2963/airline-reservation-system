@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Register - Airline Reservation System</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			margin: 0;
+			padding: 0;
+		}
+		.header {
+			display: flex;
+			justify-content: flex-end;
+			align-items: center;
+			background-color: #f4f4f4;
+			padding: 15px 30px;
+			border-bottom: 1px solid #ddd;
+		}
+		.header a {
+			margin-left: 20px;
+			text-decoration: none;
+			color: #333;
+			font-weight: bold;
+		}
+		.container {
+			display: flex;
+			justify-content: space-between;
+			padding: 20px;
+		}
+		.form-section {
+			width: 48%;
+			border: 1px solid #ccc;
+			padding: 20px;
+			border-radius: 8px;
+			box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+		}
+		h2 {
+			text-align: center;
+		}
+		label {
+			display: block;
+			margin-top: 10px;
+		}
+		input, select {
+			width: 100%;
+			padding: 8px;
+			margin-top: 5px;
+			box-sizing: border-box;
+		}
+		.add-btn {
+			margin-top: 5px;
+			display: inline-block;
+			color: blue;
+			cursor: pointer;
+			font-size: 0.9em;
+		}
+		input[type="submit"] {
+			margin-top: 15px;
+			width: 100%;
+			padding: 10px;
+			background-color: #4CAF50;
+			color: white;
+			border: none;
+			cursor: pointer;
+		}
+		.flash-success {
+			color: green;
+			font-weight: bold;
+		}
+		.flash-danger {
+			color: red;
+			font-weight: bold;
+		}
+		.flash-warning {
+			color: orange;
+			font-weight: bold;
+		}
+		.flash-default {
+			color: black;
+			font-weight: bold;
+		}
+	</style>
+	<script>
+		function addStaffEmailField() {
+			const container = document.getElementById('staff_emails');
+			const input = document.createElement('input');
+			input.type = 'email';
+			input.name = 'staff_emails[]';  // <-- updated
+			input.required = true;
+			container.appendChild(input);
+		}
+
+		function addStaffPhoneField() {
+			const container = document.getElementById('staff_phones');
+			const input = document.createElement('input');
+			input.type = 'text';
+			input.name = 'staff_phones[]';  // <-- updated
+			input.required = true;
+			container.appendChild(input);
+		}
+	</script>
+</head>
+<body>
+
+	<div class="header">
+		<a href="/">Back</a>
+	</div>
+
+	<!-- Flash messages -->
+	{% with messages = get_flashed_messages(with_categories=true) %}
+	{% if messages %}
+		<div style="width: 100%; text-align: center; margin-top: 10px;">
+		{% for category, message in messages %}
+			<div class="
+			{% if category == 'success' %}flash-success
+			{% elif category == 'danger' %}flash-danger
+			{% elif category == 'warning' %}flash-warning
+			{% else %}flash-default
+			{% endif %}">
+			{{ message }}
+			</div>
+		{% endfor %}
+		</div>
+	{% endif %}
+	{% endwith %}
+
+	<h1 style="text-align: center;">Register for Airline Reservation System</h1>
+
+	<div class="container">
+
+		<!-- Customer Registration Section -->
+		<div class="form-section">
+			<h2>Customer Registration</h2>
+			<form action="/register_customer" method="POST">
+				<label>Email:</label>
+				<input type="email" name="email" required>
+
+				<label>Name:</label>
+				<input type="text" name="name" required>
+
+				<label>Password:</label>
+				<input type="password" name="password" required>
+
+				<label>Building Number:</label>
+				<input type="number" name="building_number" required>
+
+				<label>Street:</label>
+				<input type="text" name="street" required>
+
+				<label>City:</label>
+				<input type="text" name="city" required>
+
+				<label>State:</label>
+				<input type="text" name="state" required>
+
+				<label>Phone Number:</label>
+				<input type="text" name="phone_number" required>
+
+				<label>Passport Number:</label>
+				<input type="text" name="passport_number" required>
+
+				<label>Passport Expiration:</label>
+				<input type="date" name="passport_expiration" required>
+
+				<label>Passport Country:</label>
+				<input type="text" name="passport_country" required>
+
+				<label>Date of Birth:</label>
+				<input type="date" name="date_of_birth" required>
+
+				<input type="submit" value="Register">
+			</form>
+		</div>
+
+		<!-- Staff Registration Section -->
+		<div class="form-section">
+			<h2>Staff Registration</h2>
+			<form action="/register_staff" method="POST">
+				<label>Username:</label>
+				<input type="text" name="username" required>
+
+				<label>Airline Name:</label>
+				<input type="text" name="airline_name" required>
+
+				<label>Password:</label>
+				<input type="password" name="password" required>
+
+				<label>First Name:</label>
+				<input type="text" name="first_name" required>
+
+				<label>Last Name:</label>
+				<input type="text" name="last_name" required>
+
+				<label>Date of Birth:</label>
+				<input type="date" name="date_of_birth" required>
+
+				<!-- Multiple Emails -->
+				<label>Emails:</label>
+				<div id="staff_emails">
+					<input type="email" name="staff_emails[]" required>
+				</div>
+				<span class="add-btn" onclick="addStaffEmailField()">+ Add another email</span>
+
+				<!-- Multiple Phone Numbers -->
+				<label>Phone Numbers:</label>
+				<div id="staff_phones">
+					<input type="text" name="staff_phones[]" required>
+				</div>
+				<span class="add-btn" onclick="addStaffPhoneField()">+ Add another phone</span>
+
+				<input type="submit" value="Register">
+			</form>
+		</div>
+
+	</div>
+
+</body>
+</html>
