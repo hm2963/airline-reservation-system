@@ -58,6 +58,10 @@ The goal of the project was to design, implement, and operate a **relational dat
 ├── app.py                   # Main Flask application
 ├── requirements.txt         # Python dependencies
 ├── .env.example             # Sample environment variables
+├── sql/                     # SQL scripts for database setup
+│   └── create-tables.sql    # Contains CREATE TABLE statements
+│   └── inserts.sql          # Contains INSERT statements for adding sample data
+│   └── SQL_CREATE_TABLE_statements.pdf          
 ├── templates/               # HTML templates
 │   ├── home.html
 │   ├── login.html
@@ -97,8 +101,16 @@ MYSQL_PASSWORD=
 MYSQL_DB=air_ticket_reservation_system
 ```
 
-### 3️⃣ Create the database
-Run the provided SQL schema to create required tables and seed sample data.
+### 3️⃣ Database Setup
+This project uses a **local MySQL database** (via XAMPP + phpMyAdmin).  
+To set it up:
+1. Start Apache and MySQL in XAMPP.
+2. Open [http://localhost/phpmyadmin](http://localhost/phpmyadmin).
+3. Create a new database named `air_ticket_reservation_system`.
+4. Import the `create_tables.sql` file from the `sql/` folder to create all required tables.
+5. (Optional) Add sample data if provided.
+
+*Note: The database is local to your computer — no external access is possible unless you explicitly configure it.*
 
 ### 4️⃣ Start the server
 ```bash
