@@ -144,6 +144,29 @@ Visit [http://127.0.0.1:5000](http://127.0.0.1:5000)
 
 ---
 
+## 📸 Screenshots
+
+### Customer Pages
+![Customer Home](assets/customer-home-page.png)  
+![Search for Flights](assets/customer-search-for-flights-page.png)  
+![View My Flights](assets/customer-view-my-flights-page.png)  
+![Buy Ticket](assets/customer-buy-ticket-page.png)  
+![Previous Flights](assets/previous-flights-page.png)  
+
+### Public Pages
+![Home Page](assets/home-page.png)  
+![Registration Page](assets/registration-page.png)  
+![Search for Flights (Public)](assets/search-for-flights-page.png)  
+
+### Airline Staff Pages
+![Staff Home](assets/staff-home-page.png)  
+![Create Flight](assets/staff-create-flight-page.png)  
+![Add Airplane](assets/staff-add-airplane-page.png)  
+![Add Airport](assets/staff-add-airport-page.png)  
+![View Flights](assets/staff-view-flights-page.png)  
+![View Reports](assets/staff-view-reports-page.png)  
+
+---
 ## 📜 License
 This project was developed as an academic coursework assignment.  
 For demonstration purposes only – **not for production use**.
