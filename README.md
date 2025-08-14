@@ -76,7 +76,6 @@ The goal of the project was to design, implement, and operate a **relational dat
 │   ├── add_airplane.html
 │   ├── add_airport.html
 │   └── view_reports.html
-└── static/                  # CSS, JS, image assets
 ```
 
 ---
